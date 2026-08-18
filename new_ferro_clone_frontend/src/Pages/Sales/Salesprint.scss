@@ -1,0 +1,468 @@
+#sales-pdf {
+  width: 100%;
+  max-width: 210mm;
+  padding: 10mm;
+  margin: 0 auto;
+  font-family: Arial, sans-serif;
+  font-size: 12px;
+  color: #333;
+  background: #fff;
+  box-sizing: border-box;
+  position: relative;
+
+  .main-content {
+    position: relative;
+    z-index: 1;
+  }
+
+  /* Company details (unchanged) */
+  .company-details {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    margin-bottom: 10px;
+    padding-bottom: 5px;
+    page-break-inside: avoid;
+
+    .left-details,
+    .right-details {
+      width: 32%;
+
+      p {
+        margin: 3px 0;
+        text-align: left;
+        font-size: 11px;
+      }
+    }
+
+    .middle-details {
+      width: 36%;
+      text-align: center;
+
+      p {
+        margin: 3px 0;
+        font-size: 11px;
+
+        strong {
+          font-size: 12px;
+        }
+      }
+    }
+
+    .right-details {
+      p {
+        text-align: right;
+      }
+    }
+  }
+
+  /* Invoice header (unchanged) */
+  .invoice-po-section {
+    display: grid;
+    grid-template-columns: 1fr auto 1fr;
+    align-items: center;
+    margin-bottom: 15px;
+    padding-bottom: 5px;
+    border-bottom: 1px solid #000;
+    page-break-inside: avoid;
+
+    .invoice-details {
+      text-align: left;
+
+      p {
+        margin: 3px 0;
+        font-weight: bold;
+      }
+    }
+
+    .invoice-title {
+      text-align: center;
+
+      h3 {
+        margin: 0;
+        font-size: 16px;
+        white-space: nowrap;
+      }
+    }
+
+    .po-details {
+      text-align: right;
+
+      p {
+        margin: 3px 0;
+        font-weight: bold;
+      }
+    }
+  }
+
+  /* Party cards (unchanged) */
+  .party-section {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 15px;
+    gap: 4%;
+    page-break-inside: avoid;
+
+    .party-card {
+      width: 48%;
+      padding: 10px;
+      border: 1px solid #ddd;
+      border-radius: 5px;
+      box-sizing: border-box;
+      font-size: 11px;
+
+      h3 {
+        margin: 0 0 10px 0;
+        font-size: 12px;
+        border-bottom: 1px solid #eee;
+        padding-bottom: 5px;
+      }
+
+      p {
+        margin: 5px 0;
+        word-break: break-word;
+      }
+    }
+  }
+
+  /* Items table (unchanged) */
+  .items-container {
+    page-break-inside: avoid;
+    margin-bottom: 20px;
+  }
+
+  .items-table {
+    width: 100%;
+    border-collapse: collapse;
+    table-layout: fixed;
+    page-break-inside: auto;
+
+    th,
+    td {
+      border: 1px solid #ddd;
+      padding: 5px;
+      text-align: left;
+      word-break: break-word;
+      font-size: 10px !important;
+      line-height: 1.25;
+    }
+
+    th {
+      background: #f5f5f5;
+      font-weight: bold;
+      text-align: center;
+    }
+
+    tr {
+      page-break-inside: avoid;
+    }
+
+    th.sr-no,
+    td.sr-no {
+      width: 4% !important;
+      text-align: center;
+    }
+
+    td.description-cell {
+      white-space: normal;
+      overflow: visible;
+      text-overflow: unset;
+      word-break: break-word;
+    }
+  }
+
+  /* Summary (unchanged) */
+  .summary-section {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 20px;
+    gap: 4%;
+    page-break-inside: avoid;
+
+    .transport-bank-details {
+      width: 48%;
+
+      .transport-details,
+      .bank-details {
+        padding: 8px;
+        border: 1px solid #ddd;
+        border-radius: 5px;
+        margin-bottom: 10px;
+        font-size: 11px;
+
+        p {
+          margin: 4px 0;
+        }
+
+        .lr-details {
+          display: flex;
+          justify-content: space-between;
+        }
+      }
+    }
+
+    .amount-details {
+      width: 48%;
+
+      table {
+        width: 100%;
+        border-collapse: collapse;
+
+        td {
+          padding: 5px;
+          text-align: right;
+
+          &:first-child {
+            text-align: left;
+            font-weight: bold;
+          }
+        }
+
+        .total-row {
+          border-top: 1px solid #000;
+          font-weight: bold;
+        }
+      }
+    }
+  }
+
+  /* ====================== NOTES + QR (FIXED WIDTH for NOTES) ====================== */
+  .notes-qr-section {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    flex-wrap: nowrap;
+    /* <- important: prevent wrapping, keep both in same row */
+    gap: 10px;
+    margin-bottom: 10px;
+    min-height: 120px;
+    page-break-inside: avoid;
+
+    /* NOTES: fixed 35% width always, long text wraps inside this box */
+    .notes-section {
+      flex: 0 0 40%;
+      /* fixed 35% */
+      max-width: 40%;
+      /* strictly cap at 35% */
+      box-sizing: border-box;
+      padding-right: 6px;
+      /* small breathing room */
+
+      .extra-notes,
+      .terms-section {
+        h4 {
+          margin: 0 0 5px 0;
+          font-size: 14px;
+        }
+
+        p,
+        pre {
+          margin: 2px 0;
+          white-space: pre-wrap;
+          font-family: inherit;
+          font-size: 11px;
+          word-break: break-word;
+          /* ensures long words wrap */
+          overflow-wrap: anywhere;
+          /* helps with very long strings */
+          line-height: 1.4;
+        }
+      }
+    }
+
+    /* QR/E-INVOICE: use remaining width (65%) and center qr */
+    .qr-image-section {
+      flex: 1 1 50%;
+      /* take remaining width */
+      max-width: 50%;
+      box-sizing: border-box;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      /* horizontal centering of QR */
+      justify-content: flex-start;
+      text-align: center;
+      padding: 10px 0 10px 10px;
+
+      /* E-invoice details (IRN / Ack lines) */
+      .einvoice-details-simple {
+        width: 100%;
+        text-align: left;
+        margin-bottom: 10px;
+
+        .einvoice-lines {
+          display: flex;
+          flex-direction: column;
+          gap: 4px;
+
+          .detail-line {
+            display: block;
+            /* use block for natural text wrapping */
+            font-size: 10px;
+            line-height: 1.4;
+            color: #333;
+            word-break: break-all;
+            /* forces breaking of long strings */
+            overflow-wrap: anywhere;
+            /* handles long hashes */
+            white-space: normal;
+            /* allows wrapping */
+            font-family: monospace;
+            /* consistent alignment */
+
+            .label {
+              // font-weight: 600; 
+              color: #000;
+              display: inline;
+              /* inline label stays on same line */
+              margin-right: 4px;
+              /* small spacing before IRN value */
+              white-space: normal;
+              /* allow wrapping */
+            }
+
+            /* optional - if you decide to use value separately later */
+            .value {
+              display: inline;
+              /* inline with label */
+              word-break: break-all;
+              overflow-wrap: anywhere;
+              white-space: normal;
+            }
+          }
+
+        }
+      }
+
+      .qr-code {
+        margin-top: 10px;
+        display: flex;
+        justify-content: center;
+        /* center horizontally inside qr-area */
+        align-items: center;
+        width: 100%;
+
+        img {
+          display: block;
+          margin: 0 auto;
+          width: 100px;
+          height: 100px;
+          border: 1px solid #ccc;
+          object-fit: contain;
+        }
+      }
+    }
+  }
+
+  /* Certification + signature (unchanged) */
+  .certification-section {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 6px;
+    align-items: flex-start;
+    page-break-inside: avoid;
+
+    .certification-text {
+      width: 60%;
+      font-size: 11px;
+      font-style: italic;
+    }
+
+    .signature-box {
+      width: 35%;
+      text-align: center;
+
+      p {
+        margin: 5px 0;
+      }
+
+      .signature-line {
+        width: 200px;
+        height: 1px;
+        background: #000;
+        margin: 15px auto;
+      }
+    }
+  }
+
+  .jurisdiction-note {
+    text-align: center;
+    margin-top: 20px;
+    font-weight: bold;
+    page-break-before: avoid;
+  }
+}
+
+/* ----------------- PRINT RULES ----------------- */
+@media print {
+
+  /* Remove default margins added by browsers */
+  html,
+  body {
+    margin: 0 !important;
+    padding: 0 !important;
+    height: 100% !important;
+    overflow: hidden !important;
+    background: #fff !important;
+  }
+
+  @page {
+    size: A4 portrait;
+    margin: 0 !important;
+    /* Remove all print margins */
+  }
+
+  /* Keep everything tightly within one page */
+  #sales-pdf {
+    width: 210mm !important;
+    // height: 297mm !important;
+    /* exact A4 height */
+    margin: 0 auto !important;
+    padding: 0 !important;
+    box-shadow: none !important;
+    background: #fff !important;
+    overflow: hidden !important;
+    position: relative !important;
+    page-break-after: avoid !important;
+    page-break-before: avoid !important;
+    page-break-inside: avoid !important;
+  }
+
+  #sales-pdf .main-content {
+    display: block !important;
+    margin: 0 !important;
+    padding: 0 !important;
+    overflow: visible !important;
+    page-break-after: avoid !important;
+  }
+
+  /* Allow safe sections to break naturally when needed */
+  .company-details,
+  .invoice-po-section,
+  .party-section,
+  .items-container,
+  .summary-section,
+  .notes-qr-section,
+  .certification-section {
+    page-break-inside: auto !important;
+    break-inside: auto !important;
+  }
+
+  /* Ensure e-invoice details stay visible and crisp */
+  .einvoice-details-simple {
+    background: transparent !important;
+    border: none !important;
+    color: #000 !important;
+    -webkit-print-color-adjust: exact;
+    print-color-adjust: exact;
+  }
+
+  /* Ensure wrapping works for long text */
+  .notes-section p,
+  .notes-section pre,
+  .detail-line {
+    word-break: break-word !important;
+    overflow-wrap: anywhere !important;
+    white-space: normal !important;
+  }
+}
