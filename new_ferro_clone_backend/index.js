@@ -57,7 +57,7 @@ app.use("/inquiry", inquiryRoutes);
 
 // ===== Basic Route =====
 app.get("/", (req, res) => {
-  res.send("Hello New World from New Ferro Clone Backend with MongoDB updated!");
+  res.send("Hello New World from New Finiit Backend with MongoDB updated!");
 });
 
 // ===== Server =====
